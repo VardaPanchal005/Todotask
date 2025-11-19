@@ -51,6 +51,10 @@ router.put("/update-task/:id", authenticateToken, async (req, res) => {
     try {
         const { id } = req.params;
         const { title, description } = req.body; 
+        // Validate both title and description are strings
+        if (typeof title !== "string" || typeof description !== "string") {
+            return res.status(400).json({ message: "Invalid input: title and description must be strings." });
+        }
         await Task.findByIdAndUpdate(id, { title, description });
         res.status(200).json({ message: "Task updated successfully" });
     } catch (err) {
