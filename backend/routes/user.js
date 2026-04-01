@@ -13,6 +13,10 @@ router.post("/sign-in", async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    if (typeof username !== "string" || typeof email !== "string" || typeof password !== "string") {
+      return res.status(400).json({ message: "Invalid input types" });
+    }
+
     const existingUser = await User.findOne({ username });
     const existingEmail = await User.findOne({ email });
 
@@ -49,6 +53,10 @@ router.post("/log-in", async (req, res) => {
 
     if (!username || !password) {
       return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (typeof username !== "string" || typeof password !== "string") {
+      return res.status(400).json({ message: "Invalid input types" });
     }
 
     const existingUser = await User.findOne({ username });
